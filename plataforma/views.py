@@ -121,12 +121,12 @@ def plano_alimentar(request, id):
     paciente = get_object_or_404(Pacientes, id=id)
     if not paciente.nutri == request.user:
         messages.add_message(request, constants.ERROR, 'Esse paciente não é seu')
-        return redirect('/plano_alimentar_listar/')
+        return redirect('/dados_paciente/')
 
     if request.method == "GET":
         r1 = Refeicao.objects.filter(paciente=paciente).order_by('horario')
         opcao = Opcao.objects.all()
-        return render(request, 'plano_alimentar.html', {'paciente': paciente, 'refeicao': r1, 'opcao': opcao()})
+        return render(request, 'plano_alimentar.html', {'paciente': paciente, 'refeicao': r1, 'opcao': opcao})
 
 
 def refeicao(request, id_paciente):
@@ -167,5 +167,5 @@ def opcao(request, id_paciente):
 
         o1.save()
 
-        messages.add_message(request, constants.SUCCESS, 'Opcao cadastrada')
+        messages.add_message(request, constants.SUCCESS, 'Opção cadastrada')
         return redirect(f'/plano_alimentar/{id_paciente}')

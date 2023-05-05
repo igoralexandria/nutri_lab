@@ -31,7 +31,7 @@
     </div>
     <hr>
 
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
+    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#modal">
         + Nova refeição
     </button>
 
@@ -53,19 +53,23 @@
                 </div>
 
                 <div class="body-refeicao">
-                    <div class="opcao">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img width="100%" src="{% static 'plataforma/img/perfil1.png' %}">
+                    {% for o1 in opcao %}
+                        {% if o1.refeicao == re %}
+                            <div class="opcao">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img width="100%" src="{{o1.imagem.url}}">
+                                    </div>
+
+                                    <div class="col-md-10">
+                                        {{ o1.descricao }}
+                                    </div>
+
+                                </div>
                             </div>
-
-                            <div class="col-md-10">
-                                Teste 2
-                            </div>
-
-                        </div>
-                    </div>
-
+                            <br>
+                        {% endif %}
+                    {% endfor %}
                 </div>
 
             </div>
@@ -87,11 +91,11 @@
 
                         <h4 class="titulo">Adicionar refeição</h4>
 
-                        <button type="button" onclick="exibe_refeicao()" class="btn btn-outline-success">
+                        <button type="button" onclick="exibe_refeicao()" class="btn btn-outline-primary">
                             + Nova refeição
                         </button>
 
-                        <button style="margin-left: 10px;" onclick="exibe_opcao()" type="button" class="btn btn-outline-success" >
+                        <button style="margin-left: 10px;" onclick="exibe_opcao()" type="button" class="btn btn-outline-primary" >
                             + Nova opção
                         </button>
                         <br>
@@ -136,7 +140,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <input type="submit" value="Cadastrar" class="btn btn-success">
+                                <input type="submit" value="Cadastrar" class="btn btn-primary">
                             </form>
                         </div>
 
@@ -168,7 +172,7 @@
                                     </textarea>
                                 </div>
                                 <br>
-                                <input type="submit" value="Cadastrar" class="btn btn-success">
+                                <input type="submit" value="Cadastrar" class="btn btn-primary">
                             </form>
                         </div>
 

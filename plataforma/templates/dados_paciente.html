@@ -6,8 +6,8 @@
     {% if messages %}
         <br>
         {% for message in messages %}
-            <div class="alert {{message.tags}}">
-                {{message}}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
             </div>
         {% endfor %}
     {% endif %}
@@ -16,7 +16,11 @@
     <div class="row">
 
         <div class="col-md-3">
-            <img src="{% static 'plataforma/img/perfil2.png' %}">
+            {% if paciente.sexo == "M" %}
+                <img src="{% static 'plataforma/img/perfil2.png' %}">
+            {% else %}
+                <img src="{% static 'plataforma/img/perfil1.png' %}">
+            {% endif %}
         </div>
 
         <div class="col-md-3 dados descricao">
@@ -28,70 +32,71 @@
     <hr>
 
 
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal">
         Adicionar dados do paciente
     </button>
     <br>
     <br>
     <table class="table table-striped">
         <thead>
-            <tr>
+        <tr>
             <th scope="col">Peso</th>
             <th scope="col">Altura</th>
             <th scope="col">% gordura</th>
             <th scope="col">% músculo</th>
-            </tr>
+        </tr>
         </thead>
         <tbody>
-            {% for dado in dados_paciente %}
-                <tr>
-                    <th scope="row">{{dado.peso}}</th>
-                    <td>{{dado.altura}}</td>
-                    <td>{{dado.percentual_gordura}}</td>
-                    <td>{{dado.percentual_musculo}}</td>
-                </tr>
-            {% endfor %}
+        {% for dado in dados_paciente %}
+            <tr>
+                <th scope="row">{{ dado.peso }}</th>
+                <td>{{ dado.altura }}</td>
+                <td>{{ dado.percentual_gordura }}</td>
+                <td>{{ dado.percentual_musculo }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
     <div style="width: 60%;">
-    <canvas id="myChart"></canvas>
+        <canvas id="myChart"></canvas>
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
 
-    fetch("/grafico_peso/{{paciente.id}}/",{
-        method: 'POST',
-    }).then(function(result){
-        return result.json()
-    }).then(function(data_paciente){
+        fetch("/grafico_peso/{{paciente.id}}/", {
+            method: 'POST',
+        }).then(function (result) {
+            return result.json()
+        }).then(function (data_paciente) {
 
-        const data = {
-            labels: data_paciente['labels'],
-            datasets: [{
-            label: 'Peso paciente',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: data_paciente['peso'],
-            }]
-        };
+            const data = {
+                labels: data_paciente['labels'],
+                datasets: [{
+                    label: 'Peso paciente',
+                    backgroundColor: 'rgb(41, 93, 215)',
+                    borderColor: 'rgb(41, 93, 215)',
+                    data: data_paciente['peso'],
+                }]
+            };
 
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {}
-        };
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {}
+            };
 
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-    })
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        })
 
-</script>
+    </script>
 
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -107,25 +112,25 @@
                         <div class="form-row">
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Peso</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="peso">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">Kg</span>
-                                        </div>
+                                <label for="validationServerUsername">Peso</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="peso">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">Kg</span>
                                     </div>
+                                </div>
 
                             </div>
 
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Altura</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="altura">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">cm</span>
-                                        </div>
+                                <label for="validationServerUsername">Altura</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="altura">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">cm</span>
                                     </div>
+                                </div>
 
                             </div>
 
@@ -135,25 +140,25 @@
                         <div class="form-row">
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Percentual de gordura</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="gordura">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">%</span>
-                                        </div>
+                                <label for="validationServerUsername">Percentual de gordura</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="gordura">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">%</span>
                                     </div>
+                                </div>
 
                             </div>
 
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Percentual de músculo</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="musculo">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">%</span>
-                                        </div>
+                                <label for="validationServerUsername">Percentual de músculo</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="musculo">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">%</span>
                                     </div>
+                                </div>
 
                             </div>
 
@@ -164,25 +169,25 @@
                         <div class="form-row">
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Colesterol HDL</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="hdl">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
-                                        </div>
+                                <label for="validationServerUsername">Colesterol HDL</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="hdl">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
                                     </div>
+                                </div>
 
                             </div>
 
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Colesterol LDL</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="ldl">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
-                                        </div>
+                                <label for="validationServerUsername">Colesterol LDL</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="ldl">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
                                     </div>
+                                </div>
 
                             </div>
 
@@ -192,25 +197,25 @@
                         <div class="form-row">
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Colesterol total</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="ctotal">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
-                                        </div>
+                                <label for="validationServerUsername">Colesterol total</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="ctotal">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
                                     </div>
+                                </div>
 
                             </div>
 
                             <div class='col-md'>
 
-                                    <label for="validationServerUsername">Triglicerídios</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="--" name="triglicerídios">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
-                                        </div>
+                                <label for="validationServerUsername">Triglicerídios</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="--" name="triglicerídios">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend3">mg/dL</span>
                                     </div>
+                                </div>
 
                             </div>
 
@@ -219,7 +224,7 @@
 
                         <br>
 
-                        <input type="submit" value="Cadastrar" class="btn btn-success">
+                        <input type="submit" value="Cadastrar" class="btn btn-primary">
 
                     </form>
                 </div>

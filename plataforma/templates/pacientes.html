@@ -13,32 +13,34 @@
     {% endif %}
 
     <br>
-    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal">
       Novo paciente
     </button>
 
     <br>
     <br>
-    <div  class="row">
-        {% for paciente in pacientes %}
-            <div class="col-md-4">
-                <a href="#" class="link-hover">
-                    <div class="card-paciente">
-                        <div class="foto-perfil">
-                            {% if paciente.sexo == "M" %}
-                                <img src="{% static 'plataforma/img/perfil2.png' %}">
-                            {% else %}
-                                <img src="{% static 'plataforma/img/perfil1.png' %}">
-                            {% endif %}
+    <div class="container-fluid" style="text-align: center">
+        <div  class="row">
+            {% for paciente in pacientes %}
+                <div class="col-md-4 p-3">
+                    <a href="#" class="link-hover">
+                        <div class="card-paciente">
+                            <div class="foto-perfil">
+                                {% if paciente.sexo == "M" %}
+                                    <img src="{% static 'plataforma/img/perfil2.png' %}">
+                                {% else %}
+                                    <img src="{% static 'plataforma/img/perfil1.png' %}">
+                                {% endif %}
+                            </div>
+                            <br>
+                            <p class="dados">{{paciente.nome}}</p>
+                            <p class="dados">{{paciente.idade}} Anos</p>
+                            <p class="dados">{{paciente.email}}</p>
                         </div>
-                        <br>
-                        <p class="dados">{{paciente.nome}}</p>
-                        <p class="dados">{{paciente.idade}} Anos</p>
-                        <p class="dados">{{paciente.email}}</p>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,7 +91,7 @@
                       <label>Telefone:</label>
                       <input type="text" placeholder="+55 (00) 00000-0000" class="form-control" name="telefone">
                       <br>
-                      <input type="submit" class="btn btn-success btn-lg" value="Registar">
+                      <input type="submit" class="btn btn-primary btn-lg" value="Registar">
 
                   </form>
 
